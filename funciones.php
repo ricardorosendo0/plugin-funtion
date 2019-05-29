@@ -1,16 +1,27 @@
 <?php
 /*
-Plugin Name: Funciones
+Plugin Name: Funciones Personalizadas
 Plugin URI: http://ricardorosendo.com
-Description: Plugin para liberar de funciones el fichero <code>functions.php</code> y activarlo a placer (o no) .
-Version: 0.1
+Description: Plugin para liberar de funciones el fichero <code>functions.php</code> y demas.
+Version: 0.2
 Author: Ricardo Rosendo
 Author URI: http://ricardorosendo.com
 License: GPLv2 o posterior
 */
 
-// Logo personalizado en login
 
+//personalizar el tipo de archivo a subir en multimedia
+add_filter( 'upload_mimes', 'my_myme_types', 1, 1 );
+function my_myme_types( $mime_types ) {  	  	
+	$mime_types['csv'] = '	text/csv'; // Adding .csv extension  
+	//$mime_types['json'] = 'application/json'; // Adding .json extension  
+	//unset( $mime_types['docx'] ); // Remove .xlsx extension  
+	//unset( $mime_types['doc'] ); // Remove .xlsx extension  
+	//unset( $mime_types['csv'] ); // Remove .xlsx extension  				
+  return $mime_types;
+}
+
+// Logo personalizado en login
 add_action("login_head", "my_login_head");
 function my_login_head() {
 echo "
@@ -28,11 +39,4 @@ width: 135px;
 add_action( 'login_headerurl', 'my_custom_login_url' );
 function my_custom_login_url() {
 return 'http://ayudawp.com';
-}
-
-//Cambiar texto alt del logo de login
-add_action("login_headertitle","my_custom_login_title");
-function my_custom_login_title()
-{
-return 'Otro sitio creado por Fernando Tellado';
 }
